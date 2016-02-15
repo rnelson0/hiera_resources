@@ -15,12 +15,20 @@ Puppet::Parser::Functions.newfunction(:hiera_resources) do |args|
     error("%s expects a hash as the 2nd argument; got %s" % [file_name, args[1].class]) unless args[1].is_a? Hash
   end
 
+  # Get a list of keys from args[1]
+  defaults_keys = args[1].keys
+
   if Puppet.version =~ /^4/
     call_function('hiera_hash', args).each do |type, resources|
       resources.each do |title, parameter|
-	if parameter == nil
-	  resources[title] = {}
-	end
+        if parameter == nil
+          resources[title] = {}
+        end
+
+        # Check if we need to add defaults for this resource type
+        if defaults_keys.include?(type)
+          resources[title].merge!(args[1][type])
+        end
       end
       # function_create_resources is no workie so we'll do this
       method = Puppet::Parser::Functions.function :create_resources
@@ -32,6 +40,11 @@ Puppet::Parser::Functions.newfunction(:hiera_resources) do |args|
       resources.each do |title, parameter|
         if parameter == nil
           resources[title] = {}
+        end
+        
+        # Check if we need to add defaults for this resource type
+        if defaults_keys.include?(type)
+          resources[title].merge!(args[1][type])
         end
       end
       # function_create_resources is no workie so we'll do this
