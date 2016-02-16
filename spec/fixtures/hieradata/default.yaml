@@ -12,3 +12,7 @@ test3:
 test defaults:
   notify:
     title defaults: {}
+test defaults 2:
+  notify:
+    title defaults:
+      message: this is not the default message
