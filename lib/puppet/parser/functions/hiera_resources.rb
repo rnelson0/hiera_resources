@@ -29,7 +29,7 @@ Puppet::Parser::Functions.newfunction(:hiera_resources) do |args|
 
         # Check if we need to add defaults for this resource type
         if defaults_keys.include?(type)
-          resources[title].merge!(args[1][type])
+          resources[title] = args[1][type].merge(resources[title])
         end
       end
       # function_create_resources is no workie so we'll do this
@@ -46,7 +46,7 @@ Puppet::Parser::Functions.newfunction(:hiera_resources) do |args|
         
         # Check if we need to add defaults for this resource type
         if defaults_keys.include?(type)
-          resources[title].merge!(args[1][type])
+          resources[title] = args[1][type].merge(resources[title])
         end
       end
       # function_create_resources is no workie so we'll do this
