@@ -11,12 +11,14 @@ Puppet::Parser::Functions.newfunction(:hiera_resources) do |args|
 
   error("%s requires 1 argument" % [file_name]) unless args.length >= 1
 
+  defaults_keys = []
+
   if args[1]
     error("%s expects a hash as the 2nd argument; got %s" % [file_name, args[1].class]) unless args[1].is_a? Hash
-  end
 
-  # Get a list of keys from args[1]
-  defaults_keys = args[1].keys
+    # Get a list of keys from args[1]
+    defaults_keys = args[1].keys
+  end
 
   if Puppet.version =~ /^4/
     call_function('hiera_hash', args).each do |type, resources|
