@@ -9,3 +9,6 @@ test2:
 test3:
   notify:
     title 3:
+test defaults:
+  notify:
+    title defaults: {}

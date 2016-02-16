@@ -32,4 +32,14 @@ describe 'hiera_resources' do
   end
 
   it { should run.with_params('test').and_raise_error(Puppet::ParseError) }
+
+  it 'test_defaults with a notify and default merge' do
+    should run.with_params('test defaults',{'notify' => {'message' => 'This is a default message'}}).and_return(
+      {"notify" =>
+        {"title defaults" =>
+          {"message" => 'This is a default message'}
+        }
+      }
+    )
+  end
 end
