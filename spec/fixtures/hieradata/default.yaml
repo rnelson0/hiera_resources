@@ -9,3 +9,10 @@ test2:
 test3:
   notify:
     title 3:
+test defaults:
+  notify:
+    title defaults: {}
+test defaults 2:
+  notify:
+    title defaults:
+      message: this is not the default message
